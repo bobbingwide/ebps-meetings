@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name:     EBPS Meetings
+ * Plugin Name:     eBPS Meetings
  * Plugin URI:      http://github.com/bobbingwide/ebps-meetings
  * Description:     To replace the Upcoming Events widget
  * Author:          bobbingwide
  * Author URI:      https://bobbingwide.com/about-bobbing-wide
  * Text Domain:     ebps-meetings
  * Domain Path:     /languages
- * Version:         0.1.0
+ * Version:         0.0.1
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,8 +39,17 @@ function ebps_init() {
 }
 
 function ebps_meetings_shortcode( $atts, $content, $tag ) {
-    $html = '<div><h2>Upcoming Meetings</h2></div>';
+    $html = '<div class="ribe-common">';
+    $html .= ebps_meetings_view_calendar_link();
+    $html .= '</div>';
     return $html;
 }
 
+function ebps_meetings_view_calendar_link()
+{
+    $html = '<a href="';
+    $html .= home_url('events');
+    $html .= '">View Calendar</a>';
+    return $html;
+}
 ebps_loaded();
