@@ -29,3 +29,18 @@ http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @package         ebps-meetings
  */
+
+function ebps_loaded() {
+    add_action( 'init', 'ebps_init' );
+}
+
+function ebps_init() {
+    add_shortcode( 'ebps-meetings', 'ebps_meetings_shortcode' );
+}
+
+function ebps_meetings_shortcode( $atts, $content, $tag ) {
+    $html = '<div><h2>Upcoming Meetings</h2></div>';
+    return $html;
+}
+
+ebps_loaded();
