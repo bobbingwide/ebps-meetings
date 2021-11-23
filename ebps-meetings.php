@@ -39,17 +39,20 @@ function ebps_init() {
 }
 
 function ebps_meetings_shortcode( $atts, $content, $tag ) {
-    $html = '<div class="ribe-common">';
-    $html .= ebps_meetings_view_calendar_link();
+    require_once __DIR__ . '/includes/ebps-tribe-events.php';
+    $events = ebps_get_upcoming_events();
+    $html = '<div class="tribe-common tribe-events tribe-events-view tribe-events-view--widget-events-list tribe-events-widget">';
+    $html .= ebps_meetings_upcoming_events( $events );
     $html .= '</div>';
+    $html .= ebps_meetings_view_calendar_link();
     return $html;
 }
 
-function ebps_meetings_view_calendar_link()
-{
+function ebps_meetings_view_calendar_link() {
     $html = '<a href="';
     $html .= home_url('events');
     $html .= '">View Calendar</a>';
     return $html;
 }
+
 ebps_loaded();
