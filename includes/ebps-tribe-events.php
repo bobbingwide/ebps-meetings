@@ -167,7 +167,7 @@ function ebps_meetings_lazy_shortcode( $atts, $content, $tag ) {
 function ebps_meetings_view_calendar_link() {
     $html = '<a href="';
     $html .= home_url('events');
-    $html .= '">View Calendar</a>';
+    $html .= '" title="View more events">View Calendar</a>';
     return $html;
 }
 
@@ -176,13 +176,17 @@ function ebps_meetings_view_calendar_link() {
  *
  * @return mixed cached HTML or false
  */
-
 function ebps_get_cached_meetings() {
     $html = get_transient( 'ebps-meetings' );
     return $html;
 }
 
+/**
+ * Caches the output from [ebps-meetings]
+ *
+ * @param $html
+ */
 function ebps_save_cached_meetings( $html ) {
     $result = set_transient( 'ebps-meetings', $html, 86400 );
-    bw_trace2( $result, "result", true, BW_TRACE_VERBOSE );
+    //bw_trace2( $result, "result", true, BW_TRACE_VERBOSE );
 }
