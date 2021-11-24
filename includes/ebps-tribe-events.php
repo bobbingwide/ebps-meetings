@@ -61,9 +61,9 @@ function ebps_meetings_upcoming_event ($event ) {
     $_EventEndDate = ebps_get_event_date( $event, '_EventEndDate');
     $datetime = wp_date('Y-m-d', $_EventStartDate );
     $month = wp_date( 'M', $_EventStartDate );
-    $day = wp_date( 'd', $_EventStartDate );
-    $start_time = wp_date('h:i a', $_EventStartDate );
-    $end_time = wp_date( 'h:i a', $_EventEndDate );
+    $day = wp_date( 'j', $_EventStartDate );
+    $start_time = wp_date('g:i a', $_EventStartDate );
+    $end_time = wp_date( 'g:i a', $_EventEndDate );
 
     $html = '<div class="tribe-common-g-row tribe-events-widget-events-list__event-row">';
     $html .= '<div class="tribe-events-widget-events-list__event-date-tag tribe-common-g-col">';
