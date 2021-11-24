@@ -32,11 +32,25 @@ http://www.gnu.org/licenses/gpl-2.0.html
 
 function ebps_loaded() {
     add_action( 'init', 'ebps_init', 100 );
+    add_action( 'tribe_events_event_save', 'ebps_tribe_events_event_save', 10, 3 );
 }
 
 function ebps_init() {
     add_shortcode( 'ebps-meetings', 'ebps_meetings_shortcode' );
     //ebps_maybe_register_tribe_events();
+}
+
+/**
+ * Implements tribe_events_event_save action.
+ *
+ * Clears the cached output for the [ebps-meetings] shortcode.
+ *
+ * @param $event_id
+ * @param $data
+ * @param $event
+ */
+function ebps_tribe_events_event_save( $event_id, $data, $event ) {
+    delete_transient( 'ebps-meetings');
 }
 
 /**
