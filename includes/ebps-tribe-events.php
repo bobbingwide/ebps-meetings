@@ -4,13 +4,28 @@
  *
  */
 
-function ebps_get_upcoming_events() {
-    // Dummy logic to return a couple of events.
-    // These will be 'tribe-event' posts.
 
-    $events = [ [ 'post_title' => "something"]
-        ,        ['post_title' => 'another']
+/**
+ * Loads up to 3 future tribe_events.
+ *
+ * Assumptions:
+ * - eBPS meetings don't span multiple days
+ * - We only need to see public events
+ * - It doesn't matter if today's event has already happened
+ *
+ * @return
+ */
+function ebps_get_upcoming_events() {
+    $today = wp_date( 'Y-m-d' );
+    $args = [ 'post_type' => 'tribe_events'
+        , 'meta_key' => '_EventStartDate'
+        , 'meta_value' => $today
+        , 'meta_compare' => '>='
+        , 'numberposts' => 3
+        , 'orderby' => 'meta_value'
+        , 'order' => 'ASC'
     ];
+    $events = get_posts( $args );
     return $events;
 
 }
@@ -41,19 +56,18 @@ function ebps_meetings_upcoming_events( $events ) {
  * @param $event
  * @return string
  */
-
 function ebps_meetings_upcoming_event ($event ) {
-    $datetime = '2021-11-27';
-    $month = 'Nov';
-    $day = '27';
-    $start_time = '2:00 pm';
-    $end_time = '4:00 pm';
-    $url = 'https://s.b/ebps/event/n-autumn-zoom-meeting/';
-    $title = 'N: Autumn Meeting:  Victorian Ferneries';
+    $_EventStartDate = ebps_get_event_date( $event );
+    $_EventEndDate = ebps_get_event_date( $event, '_EventEndDate');
+    $datetime = wp_date('Y-m-d', $_EventStartDate );
+    $month = wp_date( 'M', $_EventStartDate );
+    $day = wp_date( 'd', $_EventStartDate );
+    $start_time = wp_date('h:i a', $_EventStartDate );
+    $end_time = wp_date( 'h:i a', $_EventEndDate );
 
     $html = '<div class="tribe-common-g-row tribe-events-widget-events-list__event-row">';
     $html .= '<div class="tribe-events-widget-events-list__event-date-tag tribe-common-g-col">';
-    $html .= '<time class="tribe-events-widget-events-list__event-date-tag-datetime" datetime="2021-11-27">';
+    $html .= '<time class="tribe-events-widget-events-list__event-date-tag-datetime" datetime="' . $datetime . '">';
     $html .= '<span class="tribe-events-widget-events-list__event-date-tag-month">';
     $html .= $month;
     $html .= '</span>';
@@ -63,28 +77,30 @@ function ebps_meetings_upcoming_event ($event ) {
     $html .= '</time>';
     $html .= '</div>';
     $html .= '<div class="tribe-events-widget-events-list__event-wrapper tribe-common-g-col">';
-    $html .= '<article class="tribe-events-widget-events-list__event post-34632 tribe_events type-tribe_events status-publish has-post-thumbnail hentry tribe_events_cat-meetings tribe_events_cat-national tribe_events_cat-zoom cat_meetings cat_national cat_zoom">';
-    $html .= '<div class="tribe-events-widget-events-list__event-details">
-
-				<header class="tribe-events-widget-events-list__event-header">
-					<div class="tribe-events-widget-events-list__event-datetime-wrapper tribe-common-b2 tribe-common-b3--min-medium">
-		<time class="tribe-events-widget-events-list__event-datetime" datetime="2021-11-27">
-		<span class="tribe-event-date-start">2:00 pm</span> - <span class="tribe-event-time">4:00 pm</span>	</time>
-	</div>
-					<h3 class="tribe-events-widget-events-list__event-title tribe-common-h7">
-	<a href="https://s.b/ebps/event/n-autumn-zoom-meeting/" 
-	title="N: Autumn Meeting:  Victorian Ferneries" 
-	rel="bookmark" class="tribe-events-widget-events-list__event-title-link tribe-common-anchor-thin">
-    N: Autumn Meeting:  Victorian Ferneries	
-    </a>
-</h3>
-				</header>
-
-
-			</div>
-		</article>
-	</div>
-
-</div>';
+    $html .= '<article class="tribe-events-widget-events-list__event post-' . $event->ID . ' tribe_events type-tribe_events status-publish has-post-thumbnail hentry tribe_events_cat-meetings tribe_events_cat-national tribe_events_cat-zoom cat_meetings cat_national cat_zoom">';
+    $html .= '<div class="tribe-events-widget-events-list__event-details">';
+    $html .= '<header class="tribe-events-widget-events-list__event-header">';
+    $html .= '<div class="tribe-events-widget-events-list__event-datetime-wrapper tribe-common-b2 tribe-common-b3--min-medium">';
+    $html .= '<time class="tribe-events-widget-events-list__event-datetime" datetime="' . $datetime . '">';
+    $html .= '<span class="tribe-event-date-start">' . $start_time . '</span> - <span class="tribe-event-time">' . $end_time . '</span>	</time>';
+    $html .= '</div>';
+    $html .= '<h3 class="tribe-events-widget-events-list__event-title tribe-common-h7">';
+    $html .= '<a href="' . get_permalink( $event->ID ) .'" ';
+	$html .= 'title="' . $event->post_title . '" ';
+	$html .= 'rel="bookmark" class="tribe-events-widget-events-list__event-title-link tribe-common-anchor-thin">';
+	$html .= $event->post_title;
+	$html .= '</a>';
+	$html .= '</h3>';
+	$html .= '</header>';
+	$html .= '</div>';
+	$html .= '</article>';
+	$html .= '</div>';
+	$html .= '</div>';
     return $html;
+}
+
+function ebps_get_event_date( $event, $meta_key='_EventStartDate' ) {
+    $_EventDate = get_post_meta( $event->ID, $meta_key, true);
+    $datetime = strtotime( $_EventDate);
+    return $datetime;
 }
