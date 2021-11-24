@@ -4,7 +4,7 @@ Donate link:
 Tags: eBPS, Meetings, shortcode, widget, block
 Requires at least: 5.8.2
 Tested up to: 5.8.2
-Stable tag: 0.0.2
+Stable tag: 0.1.0
 
 eBPS meetings
 
@@ -33,6 +33,9 @@ To improve the overall performance of the website.
 2. Upcoming Meetings - replacement shortcode as a widget
 
 == Upgrade Notice ==
+= 0.1.0 = 
+Update for improved performing through cacheing.
+
 = 0.0.2 =
 Update for actual data load and formatting.
 
@@ -44,6 +47,12 @@ First version. Does nothing yet.
 
 
 == Changelog ==
+= 0.1.0 =
+* Changed: Clears the cached output from [ebps-meetings] when an event is updated #1
+* Changed: Move post type registration into includes file. 
+* Added: Add transient caching logic #1
+* Changed: Register tribe_events if not already registered #1
+
 = 0.0.2 = 
 * Changed: Added logic to load events and format the output #1
 
