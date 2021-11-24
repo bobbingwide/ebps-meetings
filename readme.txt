@@ -4,7 +4,7 @@ Donate link:
 Tags: eBPS, Meetings, shortcode, widget, block
 Requires at least: 5.8.2
 Tested up to: 5.8.2
-Stable tag: 0.0.1
+Stable tag: 0.0.2
 
 eBPS meetings
 
@@ -33,6 +33,8 @@ To improve the overall performance of the website.
 2. Upcoming Meetings - replacement shortcode as a widget
 
 == Upgrade Notice ==
+= 0.0.2 =
+Update for actual data load and formatting.
 
 = 0.0.1 =
 Upgrade for the first version of the shortcode.
@@ -42,6 +44,9 @@ First version. Does nothing yet.
 
 
 == Changelog ==
+= 0.0.2 = 
+* Changed: Added logic to load events and format the output #1
+
 = 0.0.1 =
 * Added: main plugin file with first version of the shortcode #1
 * Changed: Remove h2 heading, Add View Calendar link #1
