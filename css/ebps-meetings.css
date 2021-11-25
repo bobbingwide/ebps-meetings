@@ -1,0 +1,50 @@
+/**
+ * CSS to style the [ebps-meetings] shortcode output when the events calendar is deactivated.
+ */
+
+.tribe-common .tribe-common-g-row {
+    display: flex;
+}
+
+.tribe-events-widget .tribe-events-widget-events-list__event-row {
+    flex-wrap: nowrap;
+    margin-bottom: 16px;
+}
+
+.tribe-events-widget .tribe-events-widget-events-list__event-date-tag-month {
+    font-size: 11px;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.tribe-events-widget .tribe-events-widget-events-list__event-date-tag {
+    flex: none;
+    position: relative;
+    width: 64px;
+}
+
+.tribe-common .tribe-common-h2 {
+
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.42;
+}
+
+.tribe-events-widget .tribe-events-widget-events-list__event-date-tag-datetime {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tribe-events-widget .tribe-events-widget-events-list__event-datetime-wrapper {
+    margin-bottom: 4px;
+}
+
+.primary-sidebar .widget h3 {
+    margin: 0px;
+    font-size: 14px;
+}
+
+article.tribe_events.hentry {
+    margin: 0 auto;
+}
