@@ -37,11 +37,10 @@ function ebps_loaded() {
 
 function ebps_init() {
     add_shortcode( 'ebps-meetings', 'ebps_meetings_shortcode' );
-    //ebps_maybe_register_tribe_events();
 }
 
 /**
- * Implements tribe_events_event_save action.
+ * Implements `tribe_events_event_save` action.
  *
  * Clears the cached output for the [ebps-meetings] shortcode.
  *

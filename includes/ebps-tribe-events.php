@@ -85,7 +85,7 @@ function ebps_meetings_upcoming_event ($event ) {
     $html .= '<span class="tribe-event-date-start">' . $start_time . '</span> - <span class="tribe-event-time">' . $end_time . '</span>	</time>';
     $html .= '</div>';
     $html .= '<h3 class="tribe-events-widget-events-list__event-title tribe-common-h7">';
-    $html .= '<a href="' . get_permalink( $event->ID ) .'" ';
+    $html .= '<a href="' . ebps_get_permalink( $event->ID ) .'" ';
 	$html .= 'title="' . $event->post_title . '" ';
 	$html .= 'rel="bookmark" class="tribe-events-widget-events-list__event-title-link tribe-common-anchor-thin">';
 	$html .= $event->post_title;
@@ -154,6 +154,13 @@ function ebps_maybe_register_tribe_events() {
     register_post_type( 'tribe_events', $post_type_args );
 }
 
+/**
+ * Expands the [ebps-meetings] shortcode
+ * @param $atts
+ * @param $content
+ * @param $tag
+ * @return string
+ */
 function ebps_meetings_lazy_shortcode( $atts, $content, $tag ) {
     $events = ebps_get_upcoming_events();
     $html = '<div class="tribe-common tribe-events tribe-events-view tribe-events-view--widget-events-list tribe-events-widget">';
@@ -163,7 +170,11 @@ function ebps_meetings_lazy_shortcode( $atts, $content, $tag ) {
     return $html;
 }
 
-
+/**
+ * Returns the link to view all events.
+ *
+ * @return string
+ */
 function ebps_meetings_view_calendar_link() {
     $html = '<a href="';
     $html .= home_url('events');
@@ -189,4 +200,15 @@ function ebps_get_cached_meetings() {
 function ebps_save_cached_meetings( $html ) {
     $result = set_transient( 'ebps-meetings', $html, 86400 );
     //bw_trace2( $result, "result", true, BW_TRACE_VERBOSE );
+}
+
+/**
+ * Returns the permalink for an event.
+ *
+ * @param $event_id
+ * @return false|string|WP_Error
+ */
+function ebps_get_permalink( $event_id ) {
+    $permalink = get_permalink( $event_id );
+    return $permalink;
 }
