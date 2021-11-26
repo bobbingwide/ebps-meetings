@@ -45,6 +45,14 @@
     font-size: 14px;
 }
 
+.tribe-common .tribe-common-h7 {
+    font-size: 14px;
+    line-height: 1.42;
+}
+
+
+
+
 article.tribe_events.hentry {
     margin: 0 auto;
 }
