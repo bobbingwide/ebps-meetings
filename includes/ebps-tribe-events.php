@@ -27,7 +27,6 @@ function ebps_get_upcoming_events() {
     ];
     $events = get_posts( $args );
     return $events;
-
 }
 
 /**
@@ -113,10 +112,12 @@ function ebps_get_event_date( $event, $meta_key='_EventStartDate' ) {
  * then checking if the post type is already registered.
  * If it's not been registered then register it.
  * Note: The values were obtained by seeing what the parameters are to `tribe_events_register_event_type_args`.
+ *
+ * @return bool true if we registered the tribe_events post type, false if it's already registered.
  */
 function ebps_maybe_register_tribe_events() {
     if ( post_type_exists( 'tribe_events') ) {
-        return;
+        return false;
     }
     $post_type_args = [
         'rewrite' => [ 'slug' => "event", 'with_front' => false ]
@@ -152,16 +153,31 @@ function ebps_maybe_register_tribe_events() {
         ]
     ];
     register_post_type( 'tribe_events', $post_type_args );
+    return true;
 }
 
 /**
- * Expands the [ebps-meetings] shortcode
+ * Expands the [ebps-meetings] shortcode.
+ *
  * @param $atts
  * @param $content
  * @param $tag
  * @return string
  */
 function ebps_meetings_lazy_shortcode( $atts, $content, $tag ) {
+    $enqueue_css = ebps_maybe_register_tribe_events();
+    if ( $enqueue_css ) {
+        ebps_enqueue_css();
+    }
+    $html = ebps_get_cached_meetings();
+    if ( false === $html ) {
+        $html = ebps_meetings_render_html( $atts, $content, $tag );
+        ebps_save_cached_meetings($html);
+    }
+    return $html;
+}
+
+function ebps_meetings_render_html( $atts, $content, $tag ) {
     $events = ebps_get_upcoming_events();
     $html = '<div class="tribe-common tribe-events tribe-events-view tribe-events-view--widget-events-list tribe-events-widget">';
     $html .= ebps_meetings_upcoming_events($events);
@@ -211,4 +227,15 @@ function ebps_save_cached_meetings( $html ) {
 function ebps_get_permalink( $event_id ) {
     $permalink = get_permalink( $event_id );
     return $permalink;
+}
+
+/**
+ * Enqueues the CSS inline.
+ */
+function ebps_enqueue_css() {
+    //wp_enqueue_style( 'ebps-meetings', plugins_url( '/css/ebps-meetings.css', __FILE__ ), []  );
+    $inline_css = file_get_contents( plugin_dir_path( __DIR__ ) . '/css/ebps-meetings.css');
+    wp_register_style( 'ebps-meetings', false );
+    wp_enqueue_style( 'ebps-meetings' );
+    wp_add_inline_style( 'ebps-meetings', $inline_css );
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:     eBPS Meetings
- * Plugin URI:      http://github.com/bobbingwide/ebps-meetings
+ * Plugin URI:      https://github.com/bobbingwide/ebps-meetings
  * Description:     To replace the Upcoming Events widget
  * Author:          bobbingwide
  * Author URI:      https://bobbingwide.com/about-bobbing-wide
@@ -62,18 +62,8 @@ function ebps_tribe_events_event_save( $event_id, $data, $event ) {
  */
 function ebps_meetings_shortcode( $atts, $content, $tag ) {
     require_once __DIR__ . '/includes/ebps-tribe-events.php';
-    $html = ebps_get_cached_meetings();
-    ebps_enqueue_css();
-    if ( false === $html ) {
-        ebps_maybe_register_tribe_events();
-        $html = ebps_meetings_lazy_shortcode($atts, $content, $tag);
-        ebps_save_cached_meetings($html);
-    }
+    $html = ebps_meetings_lazy_shortcode($atts, $content, $tag);
     return $html;
-}
-
-function ebps_enqueue_css() {
-    wp_enqueue_style( 'ebps-meetings', plugins_url( '/css/ebps-meetings.css', __FILE__ ), []  );
 }
 
 ebps_loaded();
