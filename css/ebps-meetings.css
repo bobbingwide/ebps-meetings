@@ -50,8 +50,11 @@
     line-height: 1.42;
 }
 
-
-
+.primary-sidebar .widget_custom_html a {
+    color: #24890d;
+    font-size: 14px;
+    font-weight: 400px;
+}
 
 article.tribe_events.hentry {
     margin: 0 auto;
