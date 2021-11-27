@@ -11,14 +11,14 @@
  * Assumptions:
  * - eBPS meetings don't span multiple days
  * - We only need to see public events
- * - It doesn't matter if today's event has already happened
+ * - Look for events that haven't yet ended.
  *
  * @return
  */
 function ebps_get_upcoming_events() {
-    $today = wp_date( 'Y-m-d' );
+    $today = wp_date( 'Y-m-d H:i:s' );
     $args = [ 'post_type' => 'tribe_events'
-        , 'meta_key' => '_EventStartDate'
+        , 'meta_key' => '_EventEndDate'
         , 'meta_value' => $today
         , 'meta_compare' => '>='
         , 'numberposts' => 3
@@ -58,11 +58,13 @@ function ebps_meetings_upcoming_events( $events ) {
 function ebps_meetings_upcoming_event ($event ) {
     $_EventStartDate = ebps_get_event_date( $event );
     $_EventEndDate = ebps_get_event_date( $event, '_EventEndDate');
+    ebps_first_event_end_time( $_EventEndDate );
     $datetime = wp_date('Y-m-d', $_EventStartDate );
     $month = wp_date( 'M', $_EventStartDate );
     $day = wp_date( 'j', $_EventStartDate );
     $start_time = wp_date('g:i a', $_EventStartDate );
     $end_time = wp_date( 'g:i a', $_EventEndDate );
+
 
     $html = '<div class="tribe-common-g-row tribe-events-widget-events-list__event-row">';
     $html .= '<div class="tribe-events-widget-events-list__event-date-tag tribe-common-g-col">';
@@ -102,6 +104,20 @@ function ebps_get_event_date( $event, $meta_key='_EventStartDate' ) {
     $_EventDate = get_post_meta( $event->ID, $meta_key, true);
     $datetime = strtotime( $_EventDate);
     return $datetime;
+}
+
+/**
+ * Sets/gets the end time of the first event.
+ *
+ * @param integer| null $end_time
+ * @return int|mixed current value.
+ */
+function ebps_first_event_end_time( $end_time=null ) {
+    static $first_event_end_time = 0;
+    if ( null !== $end_time && 0 === $first_event_end_time ) {
+        $first_event_end_time = $end_time;
+    }
+    return $first_event_end_time;
 }
 
 /**
@@ -209,11 +225,24 @@ function ebps_get_cached_meetings() {
 /**
  * Caches the output from [ebps-meetings]
  *
+ * The cache should get cleared at the end of the first event.
+ * If there are no future events clear the cached daily at midnight.
+ *
+ *
  * @param $html
  */
 function ebps_save_cached_meetings( $html ) {
-    $secs = ebps_time_of_day_secs();
-    $secs = 86400 - $secs;
+
+    $first_event_end_time = ebps_first_event_end_time();
+    $secs_to_end_of_first_event = $first_event_end_time - time();
+
+    if ( $secs_to_end_of_first_event > 0 ) {
+        $secs = $secs_to_end_of_first_event;
+    } else {
+        $secs = ebps_time_of_day_secs();
+        $secs_to_end_of_day = 86400 - $secs;
+        $secs = $secs_to_end_of_day;
+    }
     $result = set_transient( 'ebps-meetings', $html, $secs );
 }
 
