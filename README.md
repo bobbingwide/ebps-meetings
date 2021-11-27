@@ -5,7 +5,7 @@
 * Tags: eBPS, Meetings, shortcode
 * Requires at least: 5.8.2
 * Tested up to: 5.8.2
-* Stable tag: 0.2.0
+* Stable tag: 0.3.0
 
 eBPS meetings
 
@@ -34,11 +34,14 @@ To improve the overall performance of the website.
 2. Upcoming Meetings - replacement shortcode as a widget
 
 ## Upgrade Notice 
+# 0.3.0
+Update for improved styling and improved caching.
+
 # 0.2.0 
 Update for improved styling and inline CSS.
 
 # 0.1.0 
-Update for improved performing through cacheing.
+Update for improved performing through caching.
 
 # 0.0.2 
 Update for actual data load and formatting.
@@ -50,6 +53,13 @@ Upgrade for the first version of the shortcode.
 First version. Does nothing yet.
 
 ## Changelog 
+# 0.3.0 
+* Changed: Fetch events with end date after the current time #1
+* Changed: Cache data until the current event has ended #1
+* Changed: Always enqueue the CSS #2.
+* Changed: Change title for View Calendar link #1
+* Changed: Improve styling of the View Calendar link #2
+
 # 0.2.0 
 * Changed: Move more logic to the includes file #1
 * Changed: Enqueue CSS inline #2
