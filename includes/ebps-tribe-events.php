@@ -212,8 +212,20 @@ function ebps_get_cached_meetings() {
  * @param $html
  */
 function ebps_save_cached_meetings( $html ) {
-    $result = set_transient( 'ebps-meetings', $html, 86400 );
-    //bw_trace2( $result, "result", true, BW_TRACE_VERBOSE );
+    $secs = ebps_time_of_day_secs();
+    $secs = 86400 - $secs;
+    $result = set_transient( 'ebps-meetings', $html, $secs );
+}
+
+/**
+ * Returns the current time of the days in seconds.
+ *
+ * @return float|int
+ */
+function ebps_time_of_day_secs() {
+    extract( localtime( time(), true ));
+    $secs = ((($tm_hour * 60) + $tm_min) * 60) + $tm_sec;
+    return $secs;
 }
 
 /**
