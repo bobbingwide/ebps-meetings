@@ -166,9 +166,7 @@ function ebps_maybe_register_tribe_events() {
  */
 function ebps_meetings_lazy_shortcode( $atts, $content, $tag ) {
     $enqueue_css = ebps_maybe_register_tribe_events();
-    if ( $enqueue_css ) {
-        ebps_enqueue_css();
-    }
+    ebps_enqueue_css();
     $html = ebps_get_cached_meetings();
     if ( false === $html ) {
         $html = ebps_meetings_render_html( $atts, $content, $tag );
@@ -194,7 +192,7 @@ function ebps_meetings_render_html( $atts, $content, $tag ) {
 function ebps_meetings_view_calendar_link() {
     $html = '<a href="';
     $html .= home_url('events');
-    $html .= '" title="View more events">View Calendar</a>';
+    $html .= '" title="View more meetings">View Calendar</a>';
     return $html;
 }
 
