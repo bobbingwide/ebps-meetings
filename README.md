@@ -5,21 +5,25 @@
 * Tags: eBPS, Meetings, shortcode
 * Requires at least: 5.8.2
 * Tested up to: 5.8.2
-* Stable tag: 0.3.0
+* Stable tag: 0.4.0
 
 eBPS meetings
 
 ## Description 
-The eBPS meetings plugin provides the [ebps-meetings] shortcode to replace the Upcoming Events widget on the British Pteridological Society’s website. [ebps.org.uk](https://ebps.org.uk)
+The eBPS meetings plugin provides the [ebps-meetings] shortcode to replace the Events list widget
+on the British Pteridological Society’s website. [ebps.org.uk](https://ebps.org.uk)
 
 * Purpose: To improve the overall performance of the website.
+
+Use in conjunction with the oik-unloader plugin to deactivate The Events Calendar plugin on demand.
 
 
 ## Installation 
 1. Upload the contents of the ebps-meetings plugin to the `/wp-content/plugins/ebps-meetings' directory
 1. Activate the ebps-meetings plugin through the 'Plugins' menu in WordPress
-1. Add the [ebps-meetings] shortcode to your content or widgets.
-1. Use the oik-unloader plugin or similar to deactivate the Events calendar on any page that doesn't need it.
+1. Add the [ebps-meetings] shortcode to your content or primary sidebar widget area as a Custom HTML widget.
+1. Remove the Events list widget from the primary sidebar.
+1. Use the oik-unloader plugin, or similar, to deactivate The Events Calendar plugin on any page that doesn't need it.
 
 
 ## Frequently Asked Questions 
@@ -34,7 +38,10 @@ To improve the overall performance of the website.
 2. Upcoming Meetings - replacement shortcode as a widget
 
 ## Upgrade Notice 
-# 0.3.0
+# 0 4.0 
+Update to enable the Events Category items in the main menu #4
+
+# 0.3.0 
 Update for improved styling and improved caching.
 
 # 0.2.0 
@@ -53,6 +60,9 @@ Upgrade for the first version of the shortcode.
 First version. Does nothing yet.
 
 ## Changelog 
+# 0.4.0 
+* Changed: Register tribe_events and tribe_events_cat on init #4
+
 # 0.3.0 
 * Changed: Fetch events with end date after the current time #1
 * Changed: Cache data until the current event has ended #1
