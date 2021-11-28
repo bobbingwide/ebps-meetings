@@ -169,7 +169,65 @@ function ebps_maybe_register_tribe_events() {
         ]
     ];
     register_post_type( 'tribe_events', $post_type_args );
+    register_taxonomy_for_object_type( 'tribe_events_cat', 'tribe_events');
     return true;
+}
+
+function ebps_maybe_register_tribe_events_taxonomy() {
+	if ( taxonomy_exists( 'tribe_events_cat') ) {
+		return false;
+	}
+	$args = [ 'label' => "Event Categories"
+	 /* , 'labels' => stdClass Object
+
+	'name' => "Event Categories"
+	, 'singular_name' => "Event Category"
+	, 'search_items' => "Search Event Categories"
+	, 'popular_items] => (NULL)
+	, 'all_items' => "All Event Categories"
+	, 'parent_item' => "Parent Event Category"
+	, 'parent_item_colon' => "Parent Event Category:"
+	, 'edit_item' => "Edit Event Category"
+	, 'view_item' => "View Category"
+	, 'update_item' => "Update Event Category"
+	, 'add_new_item' => "Add New Event Category"
+	, 'new_item_name' => "New Event Category Name"
+	, 'separate_items_with_commas] => (NULL)
+	, 'add_or_remove_items] => (NULL)
+	, 'choose_from_most_used] => (NULL)
+	, 'not_found' => "No categories found."
+	, 'no_terms' => "No categories"
+	, 'filter_by_item' => "Filter by category"
+	, 'items_list_navigation' => "Categories list navigation"
+	, 'items_list' => "Categories list"
+	, 'most_used' => "Most Used"
+	, 'back_to_items' => "&larr; Go to Categories"
+	, 'item_link' => "Event Category Link"
+	, 'item_link_description' => "A link to a particular Event category."
+	, 'menu_name' => "Event Categories"
+	, 'name_admin_bar' => "Event Category"
+	, 'archives' => "All Event Categories"
+ */
+	, 'description' => "ebps-meetings registered taxonomy"
+	, 'public' => true
+    , 'publicly_queryable' => true
+    , 'hierarchical' => true
+    , 'show_ui' => true
+    , 'show_in_menu' => true
+    , 'show_in_nav_menus' => true
+    , 'show_tagcloud' => true
+    , 'show_in_quick_edit' => true
+    , 'show_admin_column' => false
+	, 'rewrite' => [ 'with_front' => true
+				, 'hierarchical' => true
+            , 'ep_mask' => 0
+            , 'slug' => "events/category"
+			]
+	, 'query_var' => "tribe_events_cat"
+	, 'update_count_callback' => ""
+	, 'show_in_rest' => true
+    ];
+	register_taxonomy( 'tribe_events_cat', null, $args );
 }
 
 /**
@@ -181,8 +239,7 @@ function ebps_maybe_register_tribe_events() {
  * @return string
  */
 function ebps_meetings_lazy_shortcode( $atts, $content, $tag ) {
-    $enqueue_css = ebps_maybe_register_tribe_events();
-    ebps_enqueue_css();
+	ebps_enqueue_css();
     $html = ebps_get_cached_meetings();
     if ( false === $html ) {
         $html = ebps_meetings_render_html( $atts, $content, $tag );

@@ -37,6 +37,9 @@ function ebps_loaded() {
 
 function ebps_init() {
     add_shortcode( 'ebps-meetings', 'ebps_meetings_shortcode' );
+	require_once __DIR__ . '/includes/ebps-tribe-events.php';
+	ebps_maybe_register_tribe_events_taxonomy();
+	ebps_maybe_register_tribe_events();
 }
 
 /**
