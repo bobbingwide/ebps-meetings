@@ -40,6 +40,9 @@ function ebps_init() {
 	require_once __DIR__ . '/includes/ebps-tribe-events.php';
 	ebps_maybe_register_tribe_events_taxonomy();
 	ebps_maybe_register_tribe_events();
+	if ( false === has_filter( 'widget_text', 'do_shortcode')) {
+        add_filter( 'widget_text', 'do_shortcode' );
+    }
 }
 
 /**
