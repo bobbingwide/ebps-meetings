@@ -4,7 +4,7 @@ Donate link: https://ebps.org.uk/donate-to-the-bps/
 Tags: eBPS, Meetings, shortcode
 Requires at least: 5.8.2
 Tested up to: 5.8.2
-Stable tag: 0.4.0
+Stable tag: 0.4.1
 
 eBPS meetings
 
@@ -37,8 +37,11 @@ To improve the overall performance of the website.
 2. Upcoming Meetings - replacement shortcode as a widget
 
 == Upgrade Notice ==
+= 0.4.1 =
+Update to improve usability in Custom HTML widgets 
+
 = 0 4.0 =
-Update to enable the Events Category items in the main menu #4 
+Update to enable the Events Category items in the main menu
 
 = 0.3.0 =
 Update for improved styling and improved caching.
@@ -59,6 +62,10 @@ Upgrade for the first version of the shortcode.
 First version. Does nothing yet.
 
 == Changelog ==
+= 0.4.1 =
+* Fixed: Ensure do_shortcode() is run for the widget_text filter #5
+* Changed: Style View Calendar link as green for text or custom widget #2
+
 = 0.4.0 = 
 * Changed: Register tribe_events and tribe_events_cat on init #4
 
