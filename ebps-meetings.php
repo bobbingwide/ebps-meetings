@@ -7,11 +7,11 @@
  * Author URI:      https://bobbingwide.com/about-bobbing-wide
  * Text Domain:     ebps-meetings
  * Domain Path:     /languages
- * Version:         0.4.1
+ * Version:         0.5.0
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Copyright 2021 Bobbing Wide (email : herb@bobbingwide.com )
+Copyright 2021,2022 Bobbing Wide (email : herb@bobbingwide.com )
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License version 2,
@@ -61,10 +61,10 @@ function ebps_tribe_events_event_save( $event_id, $data, $event ) {
 /**
  * Implements the [ebps-meetings] shortcode.
  *
- * @param $atts
- * @param $content
- * @param $tag
- * @return string
+ * @param array $atts array of shortcode attributes
+ * @param string $content nested content
+ * @param string $tag shortcode tag
+ * @return string the expanded shortcode
  */
 function ebps_meetings_shortcode( $atts, $content, $tag ) {
     require_once __DIR__ . '/includes/ebps-tribe-events.php';

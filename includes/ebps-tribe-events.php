@@ -64,7 +64,7 @@ function ebps_meetings_upcoming_event ($event ) {
     $timezone = new DateTimeZone('+00:00' );
     $start_time = wp_date('g:i a', $_EventStartDate, $timezone );
     $end_time = wp_date( 'g:i a', $_EventEndDate, $timezone );
-    
+
     $html = '<div class="tribe-common-g-row tribe-events-widget-events-list__event-row">';
     $html .= '<div class="tribe-events-widget-events-list__event-date-tag tribe-common-g-col">';
     $html .= '<time class="tribe-events-widget-events-list__event-date-tag-datetime" datetime="' . $datetime . '">';

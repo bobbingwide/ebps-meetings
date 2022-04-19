@@ -3,8 +3,8 @@ Contributors: bobbingwide, andrewleonard
 Donate link: https://ebps.org.uk/donate-to-the-bps/
 Tags: eBPS, Meetings, shortcode
 Requires at least: 5.8.2
-Tested up to: 5.8.2
-Stable tag: 0.4.1
+Tested up to: 5.9.3
+Stable tag: 0.5.0
 
 eBPS meetings
 
@@ -37,6 +37,9 @@ To improve the overall performance of the website.
 2. Upcoming Meetings - replacement shortcode as a widget
 
 == Upgrade Notice ==
+= 0.5.0 =
+Update for BST support. 
+
 = 0.4.1 =
 Update to improve usability in Custom HTML widgets 
 
@@ -62,6 +65,12 @@ Upgrade for the first version of the shortcode.
 First version. Does nothing yet.
 
 == Changelog ==
+= 0.5.0 =
+* Fixed: Cater for BST #6
+* Fixed: Improve link styling for block widgets #2
+* Tested: With WordPress 5.9.3
+* Tested: With PHP 8.0 
+
 = 0.4.1 =
 * Fixed: Ensure do_shortcode() is run for the widget_text filter #5
 * Changed: Style View Calendar link as green for text or custom widget #2
