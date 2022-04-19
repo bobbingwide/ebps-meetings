@@ -50,6 +50,7 @@
     line-height: 1.42;
 }
 
+.primary-sidebar .widget_block a,
 .primary-sidebar .widget_text a {
     color: #24890d;
     font-size: 14px;
