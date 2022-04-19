@@ -9,11 +9,10 @@
  * Loads up to 3 future tribe_events.
  *
  * Assumptions:
- * - eBPS meetings don't span multiple days
  * - We only need to see public events
  * - Look for events that haven't yet ended.
  *
- * @return
+ * @return array zero to three tribe_events posts
  */
 function ebps_get_upcoming_events() {
     $today = wp_date( 'Y-m-d H:i:s' );
@@ -62,10 +61,10 @@ function ebps_meetings_upcoming_event ($event ) {
     $datetime = wp_date('Y-m-d', $_EventStartDate );
     $month = wp_date( 'M', $_EventStartDate );
     $day = wp_date( 'j', $_EventStartDate );
-    $start_time = wp_date('g:i a', $_EventStartDate );
-    $end_time = wp_date( 'g:i a', $_EventEndDate );
-
-
+    $timezone = new DateTimeZone('+00:00' );
+    $start_time = wp_date('g:i a', $_EventStartDate, $timezone );
+    $end_time = wp_date( 'g:i a', $_EventEndDate, $timezone );
+    
     $html = '<div class="tribe-common-g-row tribe-events-widget-events-list__event-row">';
     $html .= '<div class="tribe-events-widget-events-list__event-date-tag tribe-common-g-col">';
     $html .= '<time class="tribe-events-widget-events-list__event-date-tag-datetime" datetime="' . $datetime . '">';
@@ -233,10 +232,10 @@ function ebps_maybe_register_tribe_events_taxonomy() {
 /**
  * Expands the [ebps-meetings] shortcode.
  *
- * @param $atts
- * @param $content
- * @param $tag
- * @return string
+ * @param array $atts array of shortcode attributes
+ * @param string $content nested content
+ * @param string $tag shortcode
+ * @return string the expanded shortcode
  */
 function ebps_meetings_lazy_shortcode( $atts, $content, $tag ) {
 	ebps_enqueue_css();
